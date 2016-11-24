@@ -1,3 +1,36 @@
+### Sass template
+.sass-cache
+*.css.map
+
+### JetBrains template
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm
+*.iml
+
+## Directory-based project format:
+*.idea
+.idea/workspace.xml
+
+## File-based project format:
+*.ipr
+*.iws
+
+# IntelliJ
+out/
+
+# mpeltonen/sbt-idea plugin
+.idea_modules/
+
+# JIRA plugin
+atlassian-ide-plugin.xml
+
+# Crashlytics plugin (for Android Studio and IntelliJ)
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+
+### Others
+*.DS_Store
+/_docs
 /vendor
 /node_modules
 /public/storage
