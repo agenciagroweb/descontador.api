@@ -75,7 +75,7 @@ class User extends Authenticatable
     public function pullUser($id)
     {
         $user = $this->where('id', $id)->get();
-        //$user->load('role');
+        $user->load('role');
 
         $response = $this->filterUser($user);
 
@@ -91,7 +91,7 @@ class User extends Authenticatable
     public function pullUserEmail($mail)
     {
         $user = $this->where('email', $mail)->get();
-        //$user->load('role');
+        $user->load('role');
 
         $response = $this->filterUser($user);
 
