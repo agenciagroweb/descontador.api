@@ -21,7 +21,7 @@ class UserController extends Controller
      */
     public function __construct(User $user)
     {
-        $this->middleware('jwt.auth', ['except' => ['authenticate', 'show']]);
+        //$this->middleware('jwt.auth', ['except' => ['authenticate', 'show']]);
         $this->user = $user;
     }
 
@@ -32,15 +32,15 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = JWTAuth::parseToken()->authenticate();
-
-        if ( ! Controller::supreme($user->role))
-            return Controller::response(Controller::error(13), 401);
+//        $user = JWTAuth::parseToken()->authenticate();
+//
+//        if ( ! Controller::supreme($user->role))
+//            return Controller::response(Controller::error(13), 401);
 
         $user = $this->user->listUser();
-        $user->load('teams');
+        //$user->load('teams');
 
-        $user = $this->user->filterTeam($user);
+        //$user = $this->user->filterTeam($user);
 
         $response = $user;
 
@@ -55,13 +55,14 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = JWTAuth::parseToken()->authenticate();
-
-        if ( ! Controller::supreme($user->role))
-            return Controller::response(Controller::error(13), 401);
+//        $user = JWTAuth::parseToken()->authenticate();
+//
+//        if ( ! Controller::supreme($user->role))
+//            return Controller::response(Controller::error(13), 401);
 
         $validate = [
-            'email' => 'required|email',
+            'username' => 'required',
+            'email'    => 'required|email',
             'password' => 'required'
         ];
 
