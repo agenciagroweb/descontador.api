@@ -27,8 +27,8 @@ class CreateUsersTable extends Migration
             $table->text('social_www')->nullable();
             $table->date('birthday')->nullable();
             $table->text('address')->nullable();
-            $table->string('city', 120)->nullable();
             $table->char('state', 2)->nullable();
+            $table->string('city', 120)->nullable();
             $table->string('country', 120)->nullable();
             $table->string('zipcode', 10)->nullable();
             $table->boolean('is_active')->default(1);
