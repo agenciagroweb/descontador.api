@@ -38,9 +38,7 @@ class UserController extends Controller
 //            return Controller::response(Controller::error(13), 401);
 
         $user = $this->user->listUser();
-        //$user->load('teams');
-
-        //$user = $this->user->filterTeam($user);
+//        $user = $this->user->filterTeam($user);
 
         $response = $user;
 
@@ -98,10 +96,10 @@ class UserController extends Controller
             return Controller::response(Controller::error(38), 400);
 
         $user = $this->user->pullUser($id);
-        $user->load('teams', 'games');
-
-        $user = $this->user->filterTeam($user);
-        $user = $this->user->filterGame($user);
+//        $user->load('teams', 'games');
+//
+//        $user = $this->user->filterTeam($user);
+//        $user = $this->user->filterGame($user);
 
         $response = $user->first();
 
@@ -117,14 +115,14 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = JWTAuth::parseToken()->authenticate();
+//        $user = JWTAuth::parseToken()->authenticate();
+//
+//        if ( ! JWTAuth::parseToken()->authenticate())
+//            return Controller::response(Controller::error(13), 401);
 
-        if ( ! JWTAuth::parseToken()->authenticate())
-            return Controller::response(Controller::error(13), 401);
-
-        if ( $user->id != $id && ! Controller::supreme($user->role)) {
-            return Controller::response(Controller::error(13), 401);
-        }
+//        if ( $user->id != $id && ! Controller::supreme($user->role)) {
+//            return Controller::response(Controller::error(13), 401);
+//        }
 
         if ( ! is_numeric($id))
             return Controller::response(Controller::error(38), 400);
@@ -148,10 +146,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = JWTAuth::parseToken()->authenticate();
-
-        if ( ! Controller::supreme($user->role))
-            return Controller::response(Controller::error(13), 401);
+//        $user = JWTAuth::parseToken()->authenticate();
+//
+//        if ( ! Controller::supreme($user->role))
+//            return Controller::response(Controller::error(13), 401);
 
         $user = json_decode($this->user->pullUser($id));
 

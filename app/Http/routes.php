@@ -20,6 +20,9 @@ Route::resource('user', 'UserController', ['except' => [
     'create', 'edit'
 ]]);
 
+Route::post('user/{id}/picture', 'UserPictureController@update');
+Route::delete('user/{id}/picture', 'UserPictureController@destroy');
+
 Route::get('/', function () {
     return "<pre>Enjoy the silence.</pre>";
 });

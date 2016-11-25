@@ -58,8 +58,8 @@ class User extends Authenticatable
         $user->fill($input);
         $user->save();
 
-        //$user->role()->attach(1);
-        //$user->load('role');
+        $user->role()->attach(1);
+        $user->load('role');
 
         //$this->sendWelcome($user, $secret);
 
@@ -219,4 +219,54 @@ class User extends Authenticatable
         return false;
     }
 
+    /**
+     * Make relationship with Team
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function role()
+    {
+        return $this->belongsToMany('App\Role', 'users_role', 'user_id', 'role_id');
+    }
+
+    /**
+     * Filter pivot list.
+     *
+     * @param $user
+     * @param $full
+     * @param $address
+     * @return mixed
+     */
+    public function filterUser($user, $full = true, $address = true, $role = true)
+    {
+        if ($user->count() > 0) {
+
+            if ($full === true) {
+                foreach ($user as $i => $item) {
+                    unset($user[$i]->fid);
+                    unset($user[$i]->is_active);
+                }
+            }
+
+            if ($address === true) {
+                foreach ($user as $i => $item) {
+                    unset($user[$i]->address);
+                    unset($user[$i]->birthday);
+                }
+            }
+
+            if ($role === true) {
+                foreach ($user->lists('role') as $i => $item) {
+                    foreach ($item as $k => $role) {
+                        unset($user[$i]->role[$k]->name);
+                    }
+                }
+            } else {
+                foreach ($user->lists('role') as $i => $item) {
+                    unset($user[$i]->role);
+                }
+            }
+        }
+
+        return $user;
+    }
 }
