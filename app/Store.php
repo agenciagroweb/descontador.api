@@ -25,7 +25,7 @@ class Store extends Model
      *
      * @var array
      */
-    protected $hidden = ['password', 'pivot', 'created_at', 'updated_at'];
+    protected $hidden = ['pivot', 'created_at', 'updated_at'];
 
     /**
      * Get a list of stores.

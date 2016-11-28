@@ -49,6 +49,15 @@ Route::resource('store', 'StoreController', ['except' => [
 Route::post('store/{id}/picture', 'StorePictureController@update');
 Route::delete('store/{id}/picture', 'StorePictureController@destroy');
 
+/*
+|--------------------------------------------------------------------------
+| Coupons
+|--------------------------------------------------------------------------
+*/
+Route::resource('coupon', 'CouponController', ['except' => [
+    'create', 'edit'
+]]);
+
 Route::get('/', function () {
     return "<pre>Enjoy the silence.</pre>";
 });
