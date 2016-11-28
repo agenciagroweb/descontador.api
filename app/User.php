@@ -38,7 +38,92 @@ class User extends Authenticatable
     {
         $user = $this->all();
 
-        return $user;
+        $response = $this->filterUser($user, true);
+
+        return $response;
+    }
+
+    /**
+     * Check user by e-mail
+     *
+     * @param string $mail
+     * @return mixed
+     */
+    public function isUserEmail($mail)
+    {
+        $user = $this->where('email', $mail)->count();
+
+        if ($user > 0)
+            return true;
+
+        return false;
+    }
+
+    /**
+     * Check user by fid
+     *
+     * @param string $fid
+     * @return mixed
+     */
+    public function isUserFacebook($fid)
+    {
+        $user = $this->where('fid', $fid)->count();
+
+        if ($user > 0)
+            return true;
+
+        return false;
+    }
+
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function authEmail($request)
+    {
+        $input = $request->all();
+        $user  = new User;
+
+        $user = $user->where('email', $input['email'])->get();
+
+        if ($user->count() > 0 && ! empty($input['password'])) {
+
+            if (Hash::check($input['password'], $user[0]->password)) {
+
+                $user->load('role');
+                $user = $this->filterUser($user, false, false);
+
+                return $user->first();
+            }
+
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function authFacebook($request)
+    {
+        $input = $request->all();
+        $user  = new User;
+
+        $user = $user->where('fid', $input['fid'])->get();
+
+        if ($user->count() > 0) {
+
+            if ($input['email'] === $user[0]->email) {
+
+                $user->load('role');
+                $user = $this->filterUser($user, false, false);
+
+                return $user->first();
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -250,7 +335,10 @@ class User extends Authenticatable
             if ($address === true) {
                 foreach ($user as $i => $item) {
                     unset($user[$i]->address);
-                    unset($user[$i]->birthday);
+                    unset($user[$i]->city);
+                    unset($user[$i]->state);
+                    unset($user[$i]->country);
+                    unset($user[$i]->zipcode);
                 }
             }
 

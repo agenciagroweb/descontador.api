@@ -21,7 +21,7 @@ class UserController extends Controller
      */
     public function __construct(User $user)
     {
-        //$this->middleware('jwt.auth', ['except' => ['authenticate', 'show']]);
+        $this->middleware('jwt.auth', ['except' => ['authenticate', 'show']]);
         $this->user = $user;
     }
 
@@ -32,14 +32,12 @@ class UserController extends Controller
      */
     public function index()
     {
-//        $user = JWTAuth::parseToken()->authenticate();
-//
-//        if ( ! Controller::supreme($user->role))
-//            return Controller::response(Controller::error(13), 401);
+        $user = JWTAuth::parseToken()->authenticate();
+
+        if ( ! Controller::supreme($user->role))
+            return Controller::response(Controller::error(13), 401);
 
         $user = $this->user->listUser();
-//        $user = $this->user->filterTeam($user);
-
         $response = $user;
 
         return Controller::response($response, 200);
@@ -53,10 +51,10 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-//        $user = JWTAuth::parseToken()->authenticate();
-//
-//        if ( ! Controller::supreme($user->role))
-//            return Controller::response(Controller::error(13), 401);
+        $user = JWTAuth::parseToken()->authenticate();
+
+        if ( ! Controller::supreme($user->role))
+            return Controller::response(Controller::error(13), 401);
 
         $validate = [
             'username' => 'required',
@@ -115,14 +113,14 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-//        $user = JWTAuth::parseToken()->authenticate();
-//
-//        if ( ! JWTAuth::parseToken()->authenticate())
-//            return Controller::response(Controller::error(13), 401);
+        $user = JWTAuth::parseToken()->authenticate();
 
-//        if ( $user->id != $id && ! Controller::supreme($user->role)) {
-//            return Controller::response(Controller::error(13), 401);
-//        }
+        if ( ! JWTAuth::parseToken()->authenticate())
+            return Controller::response(Controller::error(13), 401);
+
+        if ( $user->id != $id && ! Controller::supreme($user->role)) {
+            return Controller::response(Controller::error(13), 401);
+        }
 
         if ( ! is_numeric($id))
             return Controller::response(Controller::error(38), 400);
@@ -146,10 +144,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-//        $user = JWTAuth::parseToken()->authenticate();
-//
-//        if ( ! Controller::supreme($user->role))
-//            return Controller::response(Controller::error(13), 401);
+        $user = JWTAuth::parseToken()->authenticate();
+
+        if ( ! Controller::supreme($user->role))
+            return Controller::response(Controller::error(13), 401);
 
         $user = json_decode($this->user->pullUser($id));
 

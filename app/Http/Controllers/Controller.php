@@ -16,6 +16,8 @@ class Controller extends BaseController
     protected static $statusCode = array(
         '1' => 'success',
         '13' => 'unauthorized user',
+        '14' => 'could not create token',
+        '15' => 'token not provide',
         '21' => 'user already exists',
         '22' => 'e-mail or password is incorrect',
         '34' => 'sorry, that page does not exist',

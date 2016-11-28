@@ -38,7 +38,7 @@ class AuthenticateController extends Controller
         try {
 
             if ( ! $token = JWTAuth::attempt($credentials))
-                return response()->json(['error' => 'invalid_credentials'], 401);
+                return Controller::response(Controller::error(13), 401);
 
             if ( ! empty($request->input('fid'))) {
                 $user = $this->user->authFacebook($request);
@@ -55,7 +55,7 @@ class AuthenticateController extends Controller
 
         } catch (JWTException $e) {
 
-            return response()->json(['error' => 'could_not_create_token'], 500);
+            return Controller::response(Controller::error(14), 500);
         }
     }
 }

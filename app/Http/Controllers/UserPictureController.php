@@ -21,7 +21,7 @@ class UserPictureController extends Controller
      */
     public function __construct(User $user)
     {
-//        $this->middleware('jwt.auth', ['except' => ['authenticate']]);
+        $this->middleware('jwt.auth', ['except' => ['authenticate']]);
         $this->user = $user;
     }
 
@@ -34,14 +34,14 @@ class UserPictureController extends Controller
      */
     public function update(Request $request, $id)
     {
-//        $user = JWTAuth::parseToken()->authenticate();
-//
-//        if ( ! JWTAuth::parseToken()->authenticate())
-//            return Controller::response(Controller::error(13), 401);
-//
-//        if ( $user->id != $id && ! Controller::supreme($user->role)) {
-//            return Controller::response(Controller::error(13), 401);
-//        }
+        $user = JWTAuth::parseToken()->authenticate();
+
+        if ( ! JWTAuth::parseToken()->authenticate())
+            return Controller::response(Controller::error(13), 401);
+
+        if ( $user->id != $id && ! Controller::supreme($user->role)) {
+            return Controller::response(Controller::error(13), 401);
+        }
 
 //        $validate = [
 //            'upload' => 'required|mimes:jpeg,png'
@@ -89,14 +89,14 @@ class UserPictureController extends Controller
      */
     public function destroy($id)
     {
-//        $user = JWTAuth::parseToken()->authenticate();
-//
-//        if ( ! JWTAuth::parseToken()->authenticate())
-//            return Controller::response(Controller::error(13), 401);
-//
-//        if ( $user->id != $id && ! Controller::supreme($user->role)) {
-//            return Controller::response(Controller::error(13), 401);
-//        }
+        $user = JWTAuth::parseToken()->authenticate();
+
+        if ( ! JWTAuth::parseToken()->authenticate())
+            return Controller::response(Controller::error(13), 401);
+
+        if ( $user->id != $id && ! Controller::supreme($user->role)) {
+            return Controller::response(Controller::error(13), 401);
+        }
 
         $user = json_decode($this->user->pullUser($id));
 
