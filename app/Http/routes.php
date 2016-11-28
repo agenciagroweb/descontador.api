@@ -40,3 +40,17 @@ Route::delete('user/{id}/picture', 'UserPictureController@destroy');
 Route::get('/', function () {
     return "<pre>Enjoy the silence.</pre>";
 });
+
+/*
+|--------------------------------------------------------------------------
+| Contact Mail
+|--------------------------------------------------------------------------
+*/
+Route::post('contact', 'MailController@contact');
+
+/*
+|--------------------------------------------------------------------------
+| Press Mail
+|--------------------------------------------------------------------------
+*/
+Route::post('press', 'MailController@press');
