@@ -37,6 +37,18 @@ Route::resource('user', 'UserController', ['except' => [
 Route::post('user/{id}/picture', 'UserPictureController@update');
 Route::delete('user/{id}/picture', 'UserPictureController@destroy');
 
+/*
+|--------------------------------------------------------------------------
+| Stores
+|--------------------------------------------------------------------------
+*/
+Route::resource('store', 'StoreController', ['except' => [
+    'create', 'edit'
+]]);
+
+Route::post('store/{id}/picture', 'StorePictureController@update');
+Route::delete('store/{id}/picture', 'StorePictureController@destroy');
+
 Route::get('/', function () {
     return "<pre>Enjoy the silence.</pre>";
 });
