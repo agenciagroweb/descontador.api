@@ -35,6 +35,7 @@ class Coupon extends Model
     public function listCoupon()
     {
         $response = $this->all();
+        $response->load('store');
 
         return $response;
     }
@@ -64,7 +65,10 @@ class Coupon extends Model
      */
     public function pullCoupon($id)
     {
-        $response = $this->where('id', $id)->get();
+        $coupon = $this->where('id', $id)->get();
+        $coupon->load('store');
+
+        $response = $this->filterCoupons($coupon);
 
         return $response;
     }
@@ -106,6 +110,28 @@ class Coupon extends Model
         }
 
         return false;
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function store()
+    {
+        return $this->belongsToMany('App\Store', 'coupons_store', 'coupon_id', 'store_id');
+    }
+
+    /**
+     *
+     */
+    public function filterCoupons($coupon)
+    {
+        if ($coupon->count() > 0) {
+            $coupon['store'] = $coupon->lists('store')->first();
+        }
+
+        $coupon['store'] = NULL;
+
+        return $coupon;
     }
 
 }
