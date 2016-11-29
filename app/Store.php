@@ -67,7 +67,10 @@ class Store extends Model
      */
     public function pullStore($id)
     {
-        $response = $this->where('id', $id)->get();
+        $store = $this->where('id', $id)->get();
+        $store->load('coupons');
+
+        $response = $store;
 
         return $response;
     }
@@ -165,6 +168,14 @@ class Store extends Model
         }
 
         return false;
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function coupons()
+    {
+        return $this->belongsToMany('App\Coupon', 'coupons_store', 'store_id', 'coupon_id');
     }
 
 }
