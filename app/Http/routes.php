@@ -67,6 +67,17 @@ Route::resource('category', 'CategoryController', ['except' => [
     'create', 'edit'
 ]]);
 
+/*
+|--------------------------------------------------------------------------
+| Redirect
+|--------------------------------------------------------------------------
+*/
+Route::resource('redirect', 'RedirectController', ['except' => [
+    'create', 'edit'
+]]);
+
+Route::get('r/{code}', 'RedirectController@show');
+
 Route::get('/', function () {
     return "<pre>Enjoy the silence.</pre>";
 });
