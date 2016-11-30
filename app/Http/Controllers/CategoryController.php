@@ -3,53 +3,54 @@
 namespace App\Http\Controllers;
 
 use JWTAuth;
-use App\Coupon;
+use App\Category;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 
-class CouponController extends Controller
+class CategoryController extends Controller
 {
     /**
-     * @var \App\Coupon
+     * @var \App\Category
      */
-    protected $coupon;
+    protected $category;
 
     /**
-     * CouponController constructor.
-     * @param Coupon $coupon
+     * CategoryController constructor.
+     * @param Category $category
      */
-    public function __construct(Coupon $coupon)
+    public function __construct(Category $category)
     {
         $this->middleware('jwt.auth', ['except' => ['authenticate', 'show', 'index']]);
-        $this->coupon = $coupon;
+        $this->category = $category;
     }
 
     /**
-     * Display a listing of coupons
+     * Display a listing of category
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $response = $this->coupon->listCoupon();
+        $response = $this->category->listCategory();
 
         return Controller::response($response, 200);
     }
 
     /**
-     * Create a new coupon instance.
+     * Create a new category instance.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        if ( ! JWTAuth::parseToken()->authenticate())
+        $user = JWTAuth::parseToken()->authenticate();
+
+        if ( ! Controller::supreme($user->role))
             return Controller::response(Controller::error(13), 401);
 
         $validate = [
-            'code' => 'required',
-            'title' => 'required'
+            'name' => 'required'
         ];
 
         $validator = Controller::validator($request, $validate);
@@ -57,7 +58,7 @@ class CouponController extends Controller
         if ($validator !== true)
             return Controller::response(Controller::error(38), 400);
 
-        $response = $this->coupon->pushCoupon($request);
+        $response = $this->category->pushCategory($request);
 
         return Controller::response($response, 200);
     }
@@ -73,13 +74,8 @@ class CouponController extends Controller
         if ( ! is_numeric($id))
             return Controller::response(Controller::error(38), 400);
 
-        $coupon = $this->coupon->pullCoupon($id);
-//        $user->load('teams', 'games');
-//
-//        $user = $this->user->filterTeam($user);
-//        $user = $this->user->filterGame($user);
-
-        $response = $coupon->first();
+        $category = $this->category->pullCategory($id);
+        $response = $category->first();
 
         return Controller::response($response, 200);
     }
@@ -95,12 +91,8 @@ class CouponController extends Controller
     {
         $user = JWTAuth::parseToken()->authenticate();
 
-        if ( ! JWTAuth::parseToken()->authenticate())
+        if ( ! Controller::supreme($user->role))
             return Controller::response(Controller::error(13), 401);
-
-        if ( $user->id != $id && ! Controller::supreme($user->role)) {
-            return Controller::response(Controller::error(13), 401);
-        }
 
         if ( ! is_numeric($id))
             return Controller::response(Controller::error(38), 400);
@@ -108,7 +100,7 @@ class CouponController extends Controller
         if (empty($request->all()))
             return Controller::response($request, 304);
 
-        $response = $this->coupon->updateCoupon($request, $id);
+        $response = $this->category->updateCategory($request, $id);
 
         if (isset($response['error']))
             return Controller::response(Controller::error($response['error']), 400);
@@ -129,7 +121,7 @@ class CouponController extends Controller
         if ( ! Controller::supreme($user->role))
             return Controller::response(Controller::error(13), 401);
 
-        $response = $this->coupon->deleteCoupon($id);
+        $response = $this->category->deleteCategory($id);
 
         return Controller::response($response, 204);
     }
