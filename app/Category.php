@@ -98,7 +98,7 @@ class Category extends Model
 
         return $category;
     }
-    
+
     /**
      * Delete a specific category by id.
      *
