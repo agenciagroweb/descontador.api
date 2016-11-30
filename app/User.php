@@ -76,6 +76,22 @@ class User extends Authenticatable
     }
 
     /**
+     * Check user by fid
+     *
+     * @param string $fid
+     * @return mixed
+     */
+    public function isUsernameAlready($fid)
+    {
+        $user = $this->where('username', $fid)->count();
+
+        if ($user > 0)
+            return true;
+
+        return false;
+    }
+
+    /**
      * @param $request
      * @return mixed
      */
