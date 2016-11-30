@@ -99,6 +99,9 @@ class Store extends Model
     {
         $input = $request->all();
 
+        if (isset($input['name']))
+            $input['slug'] = str_slug($input['name'], "-");
+
         $store = $this->find($id);
 
         if ($store instanceof Store) {

@@ -58,6 +58,15 @@ Route::resource('coupon', 'CouponController', ['except' => [
     'create', 'edit'
 ]]);
 
+/*
+|--------------------------------------------------------------------------
+| Category
+|--------------------------------------------------------------------------
+*/
+Route::resource('category', 'CategoryController', ['except' => [
+    'create', 'edit'
+]]);
+
 Route::get('/', function () {
     return "<pre>Enjoy the silence.</pre>";
 });
