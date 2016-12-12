@@ -78,6 +78,15 @@ Route::resource('redirect', 'RedirectController', ['except' => [
 
 Route::get('r/{code}', 'RedirectController@show');
 
+/*
+|--------------------------------------------------------------------------
+| Offer
+|--------------------------------------------------------------------------
+*/
+Route::resource('offer', 'OfferController', ['except' => [
+    'create', 'edit'
+]]);
+
 Route::get('/', function () {
     return "<pre>Enjoy the silence.</pre>";
 });
