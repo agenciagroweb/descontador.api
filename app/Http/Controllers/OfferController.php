@@ -78,10 +78,12 @@ class OfferController extends Controller
      */
     public function show($id)
     {
-        if ( ! is_numeric($id))
-            return Controller::response(Controller::error(38), 400);
+        if ( ! is_numeric($id)) {
+            $offer = $this->offer->pullOfferSlug($id);
+        } else {
+            $offer = $this->offer->pullOffer($id);
+        }
 
-        $offer = $this->offer->pullOffer($id);
         $response = $offer->first();
 
         return Controller::response($response, 200);

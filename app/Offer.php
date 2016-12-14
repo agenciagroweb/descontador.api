@@ -60,6 +60,14 @@ class Offer extends Model
     }
 
     /**
+     * @param $request
+     * @param $id
+     */
+    public function pushOfferPicture($request, $id) {
+
+    }
+
+    /**
      * Get a specific offer by id.
      *
      * @param $id
@@ -71,6 +79,19 @@ class Offer extends Model
         //$offer->load('store');
 
         $response = $offer;
+
+        return $response;
+    }
+
+    /**
+     * Get a specific offer by slug.
+     *
+     * @param $slug
+     * @return mixed
+     */
+    public function pullOfferSlug($slug)
+    {
+        $response = $this->where('slug', $slug)->get();
 
         return $response;
     }
@@ -100,6 +121,28 @@ class Offer extends Model
     }
 
     /**
+     * Update a specific picture banner by id.
+     *
+     * @param $id
+     * @param $request
+     * @return mixed
+     */
+    public function updatePicture($id, $request)
+    {
+        $user = $this->find($id);
+
+        if ($user instanceof User) {
+
+            $user->picture = $request['picture'];
+            $user->save();
+
+            return $user;
+        }
+
+        return false;
+    }
+
+    /**
      * Delete a specific offer by id.
      *
      * @param $id
@@ -111,6 +154,27 @@ class Offer extends Model
 
         if ($offer instanceof Offer) {
             return $offer->delete();
+        }
+
+        return false;
+    }
+
+    /**
+     * Delete a specific picture banner by id.
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function deletePicture($id)
+    {
+        $offer = $this->find($id);
+
+        if ($user instanceof User) {
+
+            $user->picture = null;
+            $user->save();
+
+            return $user;
         }
 
         return false;
